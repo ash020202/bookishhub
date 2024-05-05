@@ -1,0 +1,70 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Order Form</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Student Order Form</h1>
+      <form
+        id="orderForm"
+        action="bookishbackend-production.up.railway.app"
+        method="POST"
+      >
+        <label for="name">Student Name:</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="year">Year:</label>
+        <input type="text" id="year" name="year" required />
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" name="branch" required />
+
+        <label for="item">Stationary Item:</label>
+        <input type="text" id="item" name="item" required />
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" required />
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required />
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Optional: Add a script to handle form submission -->
+    <script>
+      document
+        .getElementById("orderForm")
+        .addEventListener("submit", async function (event) {
+          event.preventDefault();
+          const formData = new FormData(event.target);
+          try {
+            const response = await fetch(event.target.action, {
+              method: "POST",
+              body: formData,
+            });
+            if (response.ok) {
+              // Handle successful submission (e.g., redirect to success page)
+              window.location.href =
+                "https://ash020202.github.io/bookishhub/frontend/success.html";
+            } else {
+              // Handle submission error (e.g., display error message)
+              window.location.href =
+                "https://ash020202.github.io/bookishhub/frontend/error.html";
+            }
+          } catch (error) {
+            // Handle network error (e.g., display error message)
+            console.error("Error submitting form:", error);
+            window.location.href =
+              "https://ash020202.github.io/bookishhub/frontend/error.html";
+          }
+        });
+    </script>
+  </body>
+</html>
