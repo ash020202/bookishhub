@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Order Form</title>
     <style>
-      /* styles.css */
       * {
         margin: 0;
         padding: 0;
@@ -18,7 +17,7 @@
         color: white;
         background-repeat: no-repeat;
         background-size: cover;
-        height: 100dvh;
+        min-height: 100dvh;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -27,11 +26,8 @@
       }
 
       .container {
-        width: 500px;
-        min-height: 450px;
         padding: 20px;
         background: rgba(255, 255, 255, 0.15);
-
         box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         backdrop-filter: blur(4px);
         -webkit-backdrop-filter: blur(4px);
@@ -39,9 +35,6 @@
         border: 1px solid rgba(255, 255, 255, 0.18);
       }
       .logo {
-        /* position: absolute;
-        left: 120px;
-        top: 30px; */
         font-size: 25px;
         font-weight: bold;
         color: #dfe6e9;
@@ -53,7 +46,7 @@
       form {
         display: flex;
         flex-direction: column;
-        justify-content: space-evenly;
+
         gap: 5px;
       }
 
@@ -97,10 +90,11 @@
       .note a {
         color: white;
       }
-          @media (max-width: 600px) {
+
+      @media (max-width: 600px) {
         .container {
           width: 80%;
-          height: 60%;
+          min-height: 60%;
         }
       }
     </style>
@@ -166,22 +160,22 @@
                 mode: "cors",
               }
             );
-            console.log(response);
+            
             if (response.ok) {
               // Handle successful submission (e.g., redirect to success page)
               window.location.href =
                 "https://ash020202.github.io/bookishhub/frontend/success.html";
             } else {
               // Handle submission error (e.g., display error message)
-              // window.location.href =
-              //   "https://ash020202.github.io/bookishhub/frontend/error.html";
-              console.log(error);
+              window.location.href =
+                "https://ash020202.github.io/bookishhub/frontend/error.html";
+              
             }
           } catch (error) {
             // Handle network error (e.g., display error message)
-            console.error("Error submitting form:", error);
-            // window.location.href =
-            //   "https://ash020202.github.io/bookishhub/frontend/error.html";
+       
+            window.location.href =
+              "https://ash020202.github.io/bookishhub/frontend/error.html";
           }
         });
     </script>
