@@ -20,8 +20,10 @@
         background-size: cover;
         height: 100dvh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 20px;
       }
 
       .container {
@@ -36,7 +38,14 @@
         border-radius: 10px;
         border: 1px solid rgba(255, 255, 255, 0.18);
       }
-
+      .logo {
+        /* position: absolute;
+        left: 120px;
+        top: 30px; */
+        font-size: 25px;
+        font-weight: bold;
+        color: #dfe6e9;
+      }
       h1 {
         text-align: center;
       }
@@ -59,7 +68,7 @@
         border: 2px solid #ccc;
         border-radius: 4px;
         background-color: transparent;
-         color: white;
+        color: white;
       }
       input:focus {
         outline: none;
@@ -79,9 +88,19 @@
       button:hover {
         background-color: #0056b3;
       }
+      .note {
+        font-size: 13px;
+        color: #eb4d4b;
+        font-weight: bold;
+        padding: 5px;
+      }
+      .note a {
+        color: white;
+      }
     </style>
   </head>
   <body>
+    <p class="logo">BOOKISH HUB</p>
     <div class="container">
       <h1>Student Order Form</h1>
       <form id="orderForm">
@@ -102,6 +121,12 @@
 
         <label for="quantity">Quantity:</label>
         <input type="number" id="quantity" name="quantity" required />
+        <p class="note">
+          *<i>note:</i>if you want xerox or printout click this number👉<a
+            href="https://wa.me/918056025251"
+            >8056025251</a
+          >👈
+        </p>
 
         <button type="submit">Submit</button>
       </form>
