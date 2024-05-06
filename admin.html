@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      main {
+        width: 100dvw;
+        height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center; */
+        padding-top: 50px;
+        padding-inline: 20px;
+        gap: 50px;
+        align-items: center;
+      }
+
+      /* CSS styles go here */
+      table {
+        border-radius: 8px;
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: black;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #e6e6e6;
+      }
+
+      .delete-btn {
+        background-color: red;
+        border-radius: 4px;
+        width: 80px;
+        height: 30px;
+        border: none;
+        outline: none;
+        padding: 5px 10px;
+        color: white;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      }
+
+      /* Responsive styles */
+      @media screen and (max-width: 768px) {
+        table {
+          overflow-x: auto;
+          display: block;
+        }
+      }
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+        -webkit-animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+      @-webkit-keyframes spin {
+        to {
+          -webkit-transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Orders Dashboard</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Year</th>
+            <th>Branch</th>
+            <th>Item</th>
+            <th>Phone</th>
+            <th>Quantity</th>
+            <th>Deletion</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody">
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </main>
+
+    <script>
+      const tbody = document.getElementById("tableBody");
+      window.addEventListener("DOMContentLoaded", (e) => {
+        getOrders();
+        setInterval(getOrders, 5000);
+      });
+      async function deleteOrder(id) {
+        const currentDeleteBtn = document
+          .getElementById(id)
+          .querySelector(".delete-btn");
+
+        currentDeleteBtn.innerHTML = '<div class="loading"></div>';
+        try {
+          const response = await fetch(
+            `https://vimalserver-production.up.railway.app/orders/${id}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+              method: "DELETE",
+              mode: "cors",
+            }
+          );
+          console.log(await response);
+
+          if (response.ok) {
+            getOrders();
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+      async function getOrders() {
+        const response = await fetch(
+          "https://vimalserver-production.up.railway.app/orders",
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            method: "GET",
+            mode: "cors",
+          }
+        );
+
+        const data = await response.json();
+        tbody.innerHTML = "";
+        data.forEach((element) => {
+          const id = element._id;
+          tbody.innerHTML += ` <tr id="${id}">
+            <td data-label="Name">${element.name}</td>
+            <td data-label="Year">${element.year}</td>
+            <td data-label="Branch">${element.branch}</td>
+            <td data-label="Item">${element.item}</td>
+            <td data-label="Phone">${element.phone}</td>
+            <td data-label="Quantity">${element.quantity}</td>
+            <td >
+            <button class="delete-btn"  onClick="deleteOrder('${id}')">Delete</button></td>
+        </tr>`;
+        });
+      }
+    </script>
+  </body>
+</html>
